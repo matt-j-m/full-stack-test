@@ -3,6 +3,6 @@
         "propel/propel": "~2.0@dev"
     },
     "autoload": {
-    "classmap": ["generated-reversed-database/generated-classes/"]
-  }
+        "classmap": ["generated-reversed-database/generated-classes/"]
+    }
 }
