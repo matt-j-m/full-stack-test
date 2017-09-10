@@ -30,7 +30,7 @@ if ($conditionsCount > 0) {
     for ($i = 1; $i <= $conditionsCount; $i++) {
         $conditions[] = 'cond' . $i;
     }
-    $members->where($conditions, 'or');
+    $members->where($conditions, 'and');
 }
 
 // Execute search
