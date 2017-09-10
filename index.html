@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>FullStackTest - Members</title>
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous">
+        </script>
+        <script
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+            integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+            crossorigin="anonymous">
+        </script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/2.11.0/tabulator.min.css" rel="stylesheet">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/2.11.0/tabulator.min.js"></script>
+        <style>
+            body {
+                font-family: Helvetica, Arial, sans-serif;
+            }
+        </style>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
+                var jsonData = $.ajax({
+                          url: "member_sign-ups_per_year.php",
+                          dataType: "json",
+                          async: false
+                          }).responseText;
+
+                var data = new google.visualization.DataTable(jsonData);
+
+                var options = {
+                    title: 'Customer Sign-ups per Year',
+                    hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+                    vAxis: {minValue: 0}
+                };
+
+                var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+
+                var selectHandler = function(e) {
+                    window.location = 'member_sign-ups_per_month.php?year=' + data.getValue(chart.getSelection()[0]['row'], 0 );
+                }
+
+                google.visualization.events.addListener(chart, 'select', selectHandler);
+            }
+        </script>
+    </head>
+    <body>
+        <div id="chart_div" style="width: 100%; height: 500px;"></div>
+        <div id="members-table"></div>
+        <script type="text/javascript">
+            $( function() {
+                //create Tabulator on DOM element with id "members-table"
+                $("#members-table").tabulator({
+                    ajaxURL:"members_search.php", //ajax URL
+                    pagination:"local", //enable local pagination.
+                    paginationSize:100,
+                    fitColumns:true,
+                    columns:[
+                        {title:"id", field:"id", sorter:"number", width:"6%"},
+                        {title:"firstname", field:"firstname", sorter:"string", width:"15%", headerFilter:true},
+                        {title:"surname", field:"surname", sorter:"string", width:"15%", headerFilter:true},
+                        {title:"email", field:"email", sorter:"string", width:"40%", headerFilter:true},
+                        {title:"gender", field:"gender", sorter:"string", width:"9%"},
+                        {title:"joined_date", field:"joined_date", sorter:"date", width:"15%"},
+                    ],
+                    initialSort:[
+                        {column:"id", dir:"asc"}, //sort by this first
+                    ]
+                });
+                //load data into the table*/
+                $("#members-table").tabulator("setData");
+            });
+        </script>
+    </body>
+</html>
