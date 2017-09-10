@@ -36,7 +36,18 @@ if ($conditionsCount > 0) {
 // Execute search
 $members->find();
 
-// Return results
+// Build results array
+$results = array();
 foreach ($members as $member) {
-    echo $member->toJSON();
+    $results[] = array(
+        'id' => (string)$member->getId(),
+        'firstname' => $member->getFirstname(),
+        'surname' => $member->getSurname(),
+        'email' => $member->getEmail(),
+        'gender' => $member->getGender(),
+        'joined_date' => $member->getJoinedDate()->format('Y-m-d'),
+    );
 }
+
+// Return results
+echo json_encode($results);
