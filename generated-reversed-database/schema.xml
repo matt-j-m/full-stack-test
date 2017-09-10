@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="members" idMethod="native" phpName="Members">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true"/>
+    <column name="firstname" phpName="Firstname" type="VARCHAR" size="50"/>
+    <column name="surname" phpName="Surname" type="VARCHAR" size="50"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="50"/>
+    <column name="gender" phpName="Gender" type="VARCHAR" size="50"/>
+    <column name="joined_date" phpName="JoinedDate" type="DATE"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>

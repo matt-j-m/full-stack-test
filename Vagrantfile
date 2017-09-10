@@ -67,6 +67,11 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
   #   apt-get update
   #   apt-get install -y apache2
+  add-apt-repository -y ppa:ondrej/php
+  apt-get -y update
+  apt-get -y install php7.0
+  apt-get -y install php7.0-xml
+  apt-get -y install libapache2-mod-php7.0 libphp7.0-embed libssl-dev openssl php7.0-cgi php7.0-cli php7.0-common php7.0-dev php7.0-fpm php7.0-phpdbg
   mysql -u root -proot  scotchbox  < /var/www/public/FullStackTest/members.sql
   SHELL
 end
